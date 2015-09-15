@@ -2,16 +2,20 @@ package nz.net.nzrs.pig.udf;
 
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.JaroWinkler;
+import org.simmetrics.StringDistance;
+import org.simmetrics.metrics.Levenshtein;
+
 import java.io.IOException;
 
-public final class JaroWinklerDistance extends EvalFunc<Float> {
-    private StringMetric metric;
+/**
+ * Created by secastro on 16/09/15.
+ */
+public final class LevenshteinDistance extends EvalFunc<Float> {
+    private StringDistance metric;
     private final Float ERROR_CODE = new Float(-1);
 
-    public JaroWinklerDistance() {
-        metric = new JaroWinkler();
+    public LevenshteinDistance() {
+        metric = new Levenshtein();
     }
 
     public Float exec(Tuple input) throws IOException {
@@ -21,7 +25,7 @@ public final class JaroWinklerDistance extends EvalFunc<Float> {
         try {
             String a = (String)input.get(0);
             String b = (String)input.get(1);
-            return new Float(metric.compare(a, b));
+            return new Float(metric.distance(a, b));
         } catch(Exception e) {
             throw new IOException("Exception on processing input", e);
         }

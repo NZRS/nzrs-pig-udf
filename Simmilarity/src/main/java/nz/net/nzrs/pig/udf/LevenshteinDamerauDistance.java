@@ -1,16 +1,22 @@
 package nz.net.nzrs.pig.udf;
 
-import java.io.IOException;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
+import org.simmetrics.StringDistance;
+import org.simmetrics.metrics.DamerauLevenshtein;
 
-public final class MongeElkanDistance extends EvalFunc<Float> {
-    private AbstractStringMetric metric;
+import java.io.IOException;
+
+/**
+ * Created by secastro on 16/09/15.
+ */
+
+public final class LevenshteinDamerauDistance extends EvalFunc<Float> {
+    private StringDistance metric;
     private final Float ERROR_CODE = new Float(-1);
 
-    public MongeElkanDistance() {
-        metric = new MongeElkan();
+    public LevenshteinDamerauDistance() {
+        metric = new DamerauLevenshtein();
     }
 
     public Float exec(Tuple input) throws IOException {
@@ -20,7 +26,7 @@ public final class MongeElkanDistance extends EvalFunc<Float> {
         try {
             String a = (String)input.get(0);
             String b = (String)input.get(1);
-            return new Float(metric.getSimilarity(a, b));
+            return new Float(metric.distance(a, b));
         } catch(Exception e) {
             throw new IOException("Exception on processing input", e);
         }
