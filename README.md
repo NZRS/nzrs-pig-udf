@@ -1,4 +1,4 @@
-# Pig UDF collections
+# Pig UDF collection
 
 The following are a few functions created for Pig used by NZRS to
 analyze data
@@ -6,7 +6,7 @@ analyze data
 ## Simmilarity
 
 Set of string simmilarity functions using the
-(SimMetrics)[https://github.com/Simmetrics/simmetrics] library.
+[SimMetrics](https://github.com/Simmetrics/simmetrics) library.
 
 Currently implemented
 
